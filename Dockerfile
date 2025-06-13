@@ -1,5 +1,5 @@
-# Dockerfile pour HolyPulse - Backend Laravel uniquement pour Render
-FROM php:8.2-apache
+# Dockerfile pour HolyPulse - Backend Laravel avec PHP built-in server
+FROM php:8.2-cli
 
 # Installation des dépendances système
 RUN apt-get update && apt-get install -y \
@@ -19,9 +19,6 @@ RUN apt-get update && apt-get install -y \
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install pdo_pgsql pgsql mbstring exif pcntl bcmath gd zip
 
-# Activer mod_rewrite pour Apache
-RUN a2enmod rewrite
-
 # Installation de Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
@@ -34,21 +31,6 @@ COPY BACK/ ./
 # Installer les dépendances avec --no-scripts pour éviter les erreurs
 RUN composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist --no-scripts
 
-# Configuration Apache pour Laravel
-RUN cat > /etc/apache2/sites-available/000-default.conf << 'EOF'
-<VirtualHost *:80>
-    DocumentRoot /var/www/html/public
-    
-    <Directory /var/www/html/public>
-        AllowOverride All
-        Require all granted
-    </Directory>
-    
-    ErrorLog ${APACHE_LOG_DIR}/error.log
-    CustomLog ${APACHE_LOG_DIR}/access.log combined
-</VirtualHost>
-EOF
-
 # Permissions Laravel
 RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 755 /var/www/html/storage \
@@ -57,9 +39,9 @@ RUN chown -R www-data:www-data /var/www/html \
 # Créer les répertoires Laravel nécessaires
 RUN mkdir -p storage/logs storage/framework/cache storage/framework/sessions storage/framework/views
 
-# Setup Laravel et démarrage (le fichier est déjà copié avec BACK/)
+# Copier et configurer le script d'entrée
 RUN cp docker-entrypoint.sh /usr/local/bin/ && chmod +x /usr/local/bin/docker-entrypoint.sh
 
-EXPOSE 80
+EXPOSE 8000
 
 ENTRYPOINT ["docker-entrypoint.sh"]
