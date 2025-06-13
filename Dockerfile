@@ -34,8 +34,8 @@ COPY BACK/ ./
 # Installer les dépendances avec --no-scripts pour éviter les erreurs
 RUN composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist --no-scripts
 
-# Configuration Apache pour Laravel
-COPY BACK/apache-vhost.conf /etc/apache2/sites-available/000-default.conf
+# Configuration Apache pour Laravel (le fichier est déjà copié avec BACK/)
+RUN cp apache-vhost.conf /etc/apache2/sites-available/000-default.conf
 
 # Permissions Laravel
 RUN chown -R www-data:www-data /var/www/html \
@@ -45,9 +45,8 @@ RUN chown -R www-data:www-data /var/www/html \
 # Créer les répertoires Laravel nécessaires
 RUN mkdir -p storage/logs storage/framework/cache storage/framework/sessions storage/framework/views
 
-# Setup Laravel et démarrage
-COPY BACK/docker-entrypoint.sh /usr/local/bin/
-RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+# Setup Laravel et démarrage (le fichier est déjà copié avec BACK/)
+RUN cp docker-entrypoint.sh /usr/local/bin/ && chmod +x /usr/local/bin/docker-entrypoint.sh
 
 EXPOSE 80
 
