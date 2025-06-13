@@ -26,7 +26,7 @@ Route::get('/verses/{id}', [VerseController::class, 'show']);
 
 
 Route::post('/register', [AuthController::class, 'register']);
-// Route::post('/login', [AuthController::class, 'login']);
+Route::post('/login', [AuthController::class, 'login']);
 
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
