@@ -23,6 +23,8 @@ return [
         'http://localhost:5173',
         'http://localhost:3000',
         'https://holypulse-projet.onrender.com',
+        'https://*.vercel.app', // Pour tous les domaines Vercel
+        'https://holypulse-front.vercel.app', // Votre domaine Vercel spécifique
         env('FRONTEND_URL', 'http://localhost:3000'),
     ],
 
