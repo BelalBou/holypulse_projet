@@ -26,17 +26,12 @@ RUN a2enmod rewrite
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 # Configuration du répertoire de travail
-WORKDIR /var/www/html
-
-# Copier les fichiers composer du backend
-COPY BACK/composer.json BACK/composer.lock ./
-RUN composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist
-
-# Copier tout le code Laravel
-COPY BACK/ ./
-
-# Copier la configuration de production
-COPY BACK/.env.production .env
+WORKDIR /var/www/html    # Copier tout le code Laravel d'abord
+    COPY BACK/ ./
+    
+    # Installer les dépendances avec --no-scripts pour éviter les erreurs
+    RUN composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist --no-scripts    # Copier la configuration de production (maintenant que les fichiers existent)
+    COPY BACK/.env.production .env
 
 # Configuration Apache pour Laravel
 RUN echo '<VirtualHost *:80> \
