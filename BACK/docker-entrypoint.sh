@@ -31,5 +31,5 @@ php artisan view:cache
 echo "✅ Application Laravel prête!"
 
 # Démarrer le serveur
-echo "🌐 Démarrage du serveur sur le port 8000..."
-exec php artisan serve --host=0.0.0.0 --port=8000
+echo "🌐 Démarrage d'Apache..."
+exec apache2-foreground
