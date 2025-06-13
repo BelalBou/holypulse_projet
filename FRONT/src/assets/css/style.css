@@ -1,0 +1,36 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Helvetica Neue', sans-serif;
+    background-color: #D6443A;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* style.css */
+
+.mobile-frame {
+    width: 360px;
+    height: 640px;
+    background-color: #FAFAFA;
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    /* padding-bottom: 40px; */
+}
+
+
+a {
+    color: #FAFAFA;
+    text-decoration: none;
+}

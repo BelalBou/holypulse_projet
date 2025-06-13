@@ -1,0 +1,66 @@
+# Configuration Docker pour Render
+version: '3.8'
+
+services:
+  # Base de données PostgreSQL (plus adapté pour Render)
+  postgres:
+    image: postgres:15
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: holypulse_db
+      POSTGRES_USER: holypulse_user
+      POSTGRES_PASSWORD: holypulse_password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - holypulse_network
+
+  # Backend Laravel
+  backend:
+    build:
+      context: ./BACK
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    environment:
+      DB_CONNECTION: pgsql
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_DATABASE: holypulse_db
+      DB_USERNAME: holypulse_user
+      DB_PASSWORD: holypulse_password
+      APP_ENV: production
+      APP_DEBUG: false
+      APP_KEY: base64:YOUR_APP_KEY_HERE
+      APP_URL: https://your-backend-url.onrender.com
+      FRONTEND_URL: https://your-frontend-url.onrender.com
+    volumes:
+      - ./BACK/storage:/var/www/html/storage
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres
+    networks:
+      - holypulse_network
+
+  # Frontend Vue.js
+  frontend:
+    build:
+      context: ./FRONT
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    environment:
+      VITE_API_BASE_URL: https://your-backend-url.onrender.com
+    ports:
+      - "80:80"
+    networks:
+      - holypulse_network
+
+volumes:
+  postgres_data:
+    driver: local
+
+networks:
+  holypulse_network:
+    driver: bridge

@@ -1,0 +1,38 @@
+# Dockerfile pour Render (Frontend)
+FROM node:18-alpine as build-stage
+
+# Installer les dépendances système
+RUN apk add --no-cache git
+
+# Définir le répertoire de travail
+WORKDIR /app
+
+# Copier les fichiers package
+COPY package*.json ./
+
+# Installation des dépendances
+RUN npm ci --only=production
+
+# Copier le code source
+COPY . .
+
+# Copier le fichier d'environnement de production
+COPY .env.production .env
+
+# Construire l'application pour la production
+RUN npm run build
+
+# Stage de production
+FROM nginx:alpine
+
+# Copier les fichiers buildés
+COPY --from=build-stage /app/dist /usr/share/nginx/html
+
+# Copier la configuration nginx personnalisée
+COPY nginx.frontend.conf /etc/nginx/nginx.conf
+
+# Exposer le port
+EXPOSE 80
+
+# Commande pour démarrer nginx
+CMD ["nginx", "-g", "daemon off;"]

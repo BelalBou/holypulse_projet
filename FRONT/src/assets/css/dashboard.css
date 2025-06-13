@@ -1,0 +1,93 @@
+.mobile-frame {
+    width: 360px;
+    height: 640px;
+    background-color: #fcebea;
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+/* HEADER */
+.dashboard-header {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    right: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 10;
+}
+
+.logo-top-left {
+    width: 36px;
+}
+
+.icon-top-right {
+    width: 28px;
+    cursor: pointer;
+}
+
+/* SCROLLING COMPONENT */
+.viewport {
+    width: 360px;
+    height: 640px;
+    overflow: hidden;
+    touch-action: none;
+    position: relative;
+}
+
+.track {
+    width: 360px;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.5s ease;
+}
+
+/* SLIDES */
+.verse-slide {
+    width: 360px;
+    height: 640px;
+    flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+.verse-text {
+    font-size: 18px;
+    color: #8c1c13;
+    font-weight: bold;
+    text-align: center;
+    line-height: 1.6;
+}
+
+/* FIXED BUTTONS */
+.action-buttons {
+    position: absolute;
+    bottom: 20px;
+    right: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    z-index: 10;
+}
+
+.action-icon {
+    width: 32px;
+    cursor: pointer;
+}
+
+.verse-wrapper {
+    text-align: center;
+    padding: 0 20px;
+}
+
+.verse-title {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 12px;
+    color: #1b1b1b;
+}

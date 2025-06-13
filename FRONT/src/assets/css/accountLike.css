@@ -1,0 +1,74 @@
+.mobile-frame {
+    width: 360px;
+    height: 640px;
+    background-color: #D6443A;
+    color: #fafafa;
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+    /* important : évite double scroll */
+}
+
+h1 {
+    display: none;
+}
+
+.header {
+    padding: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header img {
+    width: 28px;
+    cursor: pointer;
+}
+
+/* SECTION SCROLLABLE */
+.scrollable-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0 20px 20px 20px;
+}
+
+.likes-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.verse {
+    background-color: #dd7870;
+    padding: 12px;
+    border-radius: 8px;
+}
+
+.verse-title {
+    font-weight: bold;
+    margin-bottom: 4px;
+}
+
+.verse-content {
+    color: #882c25;
+}
+
+.loading,
+.empty {
+    text-align: center;
+    margin-top: 40px;
+}
+
+.separation {
+    height: 1px;
+    /* Épaisseur de la barre */
+    background-color: #fafafa;
+    /* Couleur de la barre */
+    opacity: 0.3;
+    /* Optionnel : rend la barre plus douce */
+    margin: 20px 0;
+    /* Espace autour de la barre */
+}
