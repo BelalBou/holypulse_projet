@@ -1,24 +1,39 @@
 import axios from 'axios'
-import Cookies from 'js-cookie' // ← Assure-toi d'avoir fait : npm install js-cookie
 
 // TEMPORAIRE : Hard-codé pour éviter les problèmes Vercel
 const baseURL = 'https://holypulse-projet.onrender.com'
 // const baseURL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000'
 
 const api = axios.create({
-  baseURL: baseURL, // pour les routes auth directes
+  baseURL: baseURL,
   timeout: 5000,
-  withCredentials: true,
+  headers: {
+    'Content-Type': 'application/json',
+    'Accept': 'application/json',
+  }
 })
 
-
-// Injecte automatiquement le token CSRF dans les requêtes
+// Interceptor pour ajouter le token Bearer aux requêtes
 api.interceptors.request.use(config => {
-  const token = Cookies.get('XSRF-TOKEN')
+  const token = localStorage.getItem('holypulse_token')
   if (token) {
-    config.headers['X-XSRF-TOKEN'] = decodeURIComponent(token)
+    config.headers.Authorization = `Bearer ${token}`
   }
   return config
 })
+
+// Interceptor pour gérer les erreurs d'authentification
+api.interceptors.response.use(
+  response => response,
+  error => {
+    if (error.response?.status === 401) {
+      // Token expiré ou invalide
+      localStorage.removeItem('holypulse_token')
+      localStorage.removeItem('holypulse_user')
+      window.location.href = '/login'
+    }
+    return Promise.reject(error)
+  }
+)
 
 export default api

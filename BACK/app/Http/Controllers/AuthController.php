@@ -45,10 +45,13 @@ class AuthController extends Controller
             ], 401);
         }
     
-        $request->session()->regenerate();
+        $user = Auth::user();
+        $token = $user->createToken('holypulse_token')->plainTextToken;
     
         return response()->json([
-            'message' => 'Connecté avec succès'
+            'message' => 'Connecté avec succès',
+            'user' => $user,
+            'token' => $token
         ]);
     }
 

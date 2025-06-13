@@ -50,20 +50,23 @@ const handleLogin = async () => {
   error.value = null
 
   try {
-    // 1. Init CSRF
-    await authApi.get('/sanctum/csrf-cookie')
-
-    // 2. Login
-    await authApi.post('/api/login', {
+    // Login avec token
+    const response = await authApi.post('/api/login', {
       email: email.value,
       password: password.value
     })
 
-    // 3. Redirige
+    // Stocker le token et les données utilisateur
+    if (response.data.token) {
+      localStorage.setItem('holypulse_token', response.data.token)
+      localStorage.setItem('holypulse_user', JSON.stringify(response.data.user))
+    }
+
+    // Rediriger vers le dashboard
     router.push('/dashboard')
   } catch (err) {
     error.value = 'Identifiants invalides. Vérifie ton e-mail et mot de passe.'
-    // console.error(err)
+    console.error('Erreur de connexion:', err)
   }
 }
 

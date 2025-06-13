@@ -41,10 +41,14 @@ export default {
           password_confirmation: this.password_confirmation
         })
 
-        const token = response.data.token
-        localStorage.setItem('token', token)
+        // Stocker le token et les données utilisateur avec les bonnes clés
+        if (response.data.token) {
+          localStorage.setItem('holypulse_token', response.data.token)
+          localStorage.setItem('holypulse_user', JSON.stringify(response.data.user))
+        }
+
         alert("Inscription réussie !")
-        this.$router.push('/') // redirection après inscription
+        this.$router.push('/dashboard') // redirection vers le dashboard après inscription
 
       } catch (err) {
         alert("Erreur lors de l'inscription")

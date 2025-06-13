@@ -31,9 +31,7 @@ Route::post('/login', [AuthController::class, 'login']);
 
 // Route de déconnexion déplacée dans API
 Route::post('/logout', function (Request $request) {
-    Auth::guard('web')->logout();
-    $request->session()->invalidate();
-    $request->session()->regenerateToken();
+    $request->user()->currentAccessToken()->delete();
     return response()->json(['message' => 'Déconnecté avec succès']);
 })->middleware('auth:sanctum');
 

@@ -4,7 +4,7 @@ import Home from '../pages/Home.vue';
 import Login from '../pages/Login.vue';
 import Register from '../pages/Register.vue';
 import Dashboard from '../pages/Dashboard.vue';
-import api from '../api';
+import authApi from '../authApi';
 import Account from '../components/account/Account.vue'; // adapte le chemin si nécessaire
 import AccountLikes from '../components/account/AccountLikes.vue'; // adapte le chemin si nécessaire
 import AccountComments from '../components/account/AccountComments.vue'; // adapte le chemin si nécessaire
@@ -30,10 +30,20 @@ const router = createRouter({
 // ✅ Vérification globale avant chaque navigation
 router.beforeEach(async (to, from, next) => {
   if (to.meta.requiresAuth) {
+    // Vérifier d'abord si on a un token
+    const token = localStorage.getItem('holypulse_token')
+    if (!token) {
+      next('/login')
+      return
+    }
+    
     try {
-      await api.get('/user') // ← Laravel renvoie 401 si non connecté
+      await authApi.get('/api/user') // ← Laravel renvoie 401 si non connecté
       next()
     } catch (err) {
+      // Token invalide ou expiré
+      localStorage.removeItem('holypulse_token')
+      localStorage.removeItem('holypulse_user')
       next('/login') // Redirection vers login
     }
   } else {

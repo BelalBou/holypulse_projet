@@ -45,9 +45,18 @@
   async function logout() {
     try {
       await authApi.post('/api/logout')
+      
+      // Supprimer le token et les données utilisateur du localStorage
+      localStorage.removeItem('holypulse_token')
+      localStorage.removeItem('holypulse_user')
+      
       router.push('/')
     } catch (error) {
       console.error('Erreur de déconnexion', error)
+      // Même en cas d'erreur, on nettoie le localStorage et on redirige
+      localStorage.removeItem('holypulse_token')
+      localStorage.removeItem('holypulse_user')
+      router.push('/')
     }
   }
   </script>
