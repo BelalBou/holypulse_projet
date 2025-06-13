@@ -48,3 +48,12 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/verses/{verse}/comments', [VerseCommentController::class, 'index']);
     Route::post('/verses/{verse}/comments', [VerseCommentController::class, 'store']);
 });
+
+// Route de test API
+Route::get('/test', function () {
+    return response()->json([
+        'status' => 'success',
+        'message' => 'API is working!',
+        'timestamp' => now()
+    ]);
+});

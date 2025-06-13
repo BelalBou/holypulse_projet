@@ -24,7 +24,7 @@ return [
         'http://localhost:3000',
         'https://holypulse-projet.onrender.com',
         'https://*.vercel.app', // Pour tous les domaines Vercel
-        'https://holypulse-front.vercel.app', // Votre domaine Vercel spécifique
+        'https://holypulse-projet-l80s01nuw-belalbous-projects.vercel.app', // Votre vraie URL Vercel
         env('FRONTEND_URL', 'http://localhost:3000'),
     ],
 

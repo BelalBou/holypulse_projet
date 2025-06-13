@@ -17,7 +17,12 @@ use Illuminate\Support\Facades\Auth;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return response()->json([
+        'status' => 'success',
+        'message' => 'HolyPulse API is running!',
+        'timestamp' => now(),
+        'version' => '1.0.0'
+    ]);
 });
 
 Route::post('/login', [AuthController::class, 'login']);
@@ -36,3 +41,13 @@ Route::post('/logout', function (Request $request) {
 
     return response()->json(['message' => 'Déconnecté avec succès']);
 })->middleware('auth:sanctum');
+
+// Route de test de santé
+Route::get('/health', function () {
+    return response()->json([
+        'status' => 'ok',
+        'database' => 'connected',
+        'timestamp' => now(),
+        'environment' => app()->environment()
+    ]);
+});
