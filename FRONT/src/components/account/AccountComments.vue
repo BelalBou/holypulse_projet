@@ -1,8 +1,8 @@
 <template>
 <div class="mobile-frame">
   <div class="header">
-    <img src="../../assets/img/back.svg" @click="goBack" />
-    <h1>Mes Likes</h1>
+    <img :src="backIcon" @click="goBack" />
+    <h1>Mes Commentaires</h1>
   </div>
 
   <div class="scrollable-content">
@@ -28,6 +28,9 @@
   import api from '../../api'
   import { useRouter } from 'vue-router'
   
+  // Import des images
+  import backIcon from '../../assets/img/back.svg'
+  
 
   const router = useRouter()
   // const verses = ref([])
@@ -39,15 +42,19 @@
   }
   
   onMounted(async () => {
-  try {
-    const { data } = await api.get('/comments/verses')
-    comments.value = data
-  } catch (err) {
-    console.error('Erreur lors du chargement des commentaires :', err)
-  } finally {
-    loading.value = false
-  }
-})
+    try {
+      const { data } = await api.get('/comments/verses')
+      comments.value = data
+    } catch (err) {
+      console.error('Erreur lors du chargement des commentaires :', err)
+      if (err.response?.status === 401) {
+        // Redirection vers login si non authentifié
+        router.push('/login')
+      }
+    } finally {
+      loading.value = false
+    }
+  })
 
   </script>
   

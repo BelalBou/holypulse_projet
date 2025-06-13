@@ -21,24 +21,28 @@ class VerseCommentController extends Controller
     }
 
     public function commentedVerses(Request $request)
-{
-    $user = $request->user();
+    {
+        $user = $request->user();
+        
+        if (!$user) {
+            return response()->json(['error' => 'Utilisateur non authentifié'], 401);
+        }
 
-    $commentedVerses = DB::table('verse_comments')
-        ->join('bible_verses_segond_1910', 'verse_comments.verse_id', '=', 'bible_verses_segond_1910.id')
-        ->where('verse_comments.user_id', $user->id)
-        ->select(
-            'verse_comments.id as comment_id',
-            'verse_comments.content',
-            'bible_verses_segond_1910.book',
-            'bible_verses_segond_1910.chapter',
-            'bible_verses_segond_1910.verse',
-            'bible_verses_segond_1910.text')
-        ->orderBy('created_at', 'desc')
-        ->get();
+        $commentedVerses = DB::table('verse_comments')
+            ->join('bible_verses_segond_1910', 'verse_comments.verse_id', '=', 'bible_verses_segond_1910.id')
+            ->where('verse_comments.user_id', $user->id)
+            ->select(
+                'verse_comments.id as comment_id',
+                'verse_comments.content',
+                'bible_verses_segond_1910.book',
+                'bible_verses_segond_1910.chapter',
+                'bible_verses_segond_1910.verse',
+                'bible_verses_segond_1910.text')
+            ->orderBy('verse_comments.created_at', 'desc')
+            ->get();
 
-    return response()->json($commentedVerses);
-}
+        return response()->json($commentedVerses);
+    }
 
 
     // Crée un nouveau commentaire

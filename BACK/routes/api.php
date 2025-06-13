@@ -44,14 +44,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/likes', [VerseLikeController::class, 'index']);
     Route::post('/verses/{id}/like', [VerseLikeController::class, 'toggle']);
-});
-
-Route::get('/likes/verses', [VerseLikeController::class, 'likedVerses']);
-
-Route::get('/comments/verses', [VerseCommentController::class, 'commentedVerses']);
-
-
-Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/likes/verses', [VerseLikeController::class, 'likedVerses']);
+    Route::get('/comments/verses', [VerseCommentController::class, 'commentedVerses']);
     Route::get('/verses/{verse}/comments', [VerseCommentController::class, 'index']);
     Route::post('/verses/{verse}/comments', [VerseCommentController::class, 'store']);
 });

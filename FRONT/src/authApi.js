@@ -1,8 +1,7 @@
 import axios from 'axios'
 
-// TEMPORAIRE : Hard-codé pour éviter les problèmes Vercel
-const baseURL = 'https://holypulse-projet.onrender.com'
-// const baseURL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000'
+// Utilise les variables d'environnement
+const baseURL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000'
 
 const api = axios.create({
   baseURL: baseURL,

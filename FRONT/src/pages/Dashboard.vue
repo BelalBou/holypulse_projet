@@ -2,13 +2,13 @@
   <div class="mobile-frame">
     <!-- UI FIXE -->
     <div class="dashboard-header">
-      <img src="../assets/img/logo_vector.png" alt="Logo HolyPulse" class="logo-top-left" />
+      <img :src="logoVector" alt="Logo HolyPulse" class="logo-top-left" />
       <img
-      src="../assets/img/account.svg"
-      alt="Mon compte"
-      class="icon-top-right"
-      @click="goToAccount"
-    />
+        :src="accountIcon"
+        alt="Mon compte"
+        class="icon-top-right"
+        @click="goToAccount"
+      />
     </div>
 
     <!-- ZONE SCROLLABLE -->
@@ -26,12 +26,15 @@
 import { useRouter } from 'vue-router'
 import VerticalScrollFeed from '../components/VerticalScrollFeed.vue'
 
+// Import des images
+import logoVector from '../assets/img/logo_vector.png'
+import accountIcon from '../assets/img/account.svg'
+
 const router = useRouter()
 
 function goToAccount() {
   router.push('/account')
-}
-</script>
+}</script>
 
 <style scoped>
 @import '../assets/css/dashboard.css';

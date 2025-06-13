@@ -22,9 +22,17 @@
     <!-- Boutons FIXES -->
     <div class="action-buttons">
       <img
-        :src="isCurrentVerseLiked ? '/src/assets/img/liked.svg' : '/src/assets/img/like.svg'" alt="Like" class="action-icon" @click="toggleLike" />
-      <img src="/src/assets/img/comment.svg" alt="Commenter" class="action-icon" @click="showCommentModal = true" />
-
+        :src="isCurrentVerseLiked ? likedIcon : likeIcon" 
+        alt="Like" 
+        class="action-icon" 
+        @click="toggleLike" 
+      />
+      <img 
+        :src="commentIcon" 
+        alt="Commenter" 
+        class="action-icon" 
+        @click="showCommentModal = true" 
+      />
     </div>
   
     <!-- Modal de connexion -->
@@ -57,6 +65,11 @@
   import api from '../api'
   import authApi from '../authApi'
   import { ref, onMounted, computed, nextTick } from 'vue'
+  
+  // Import des images
+  import likeIcon from '../assets/img/like.svg'
+  import likedIcon from '../assets/img/liked.svg'
+  import commentIcon from '../assets/img/comment.svg'
   
   const books = {
     1: 'Genèse', 2: 'Exode', 3: 'Lévitique', 4: 'Nombres', 5: 'Deutéronome',

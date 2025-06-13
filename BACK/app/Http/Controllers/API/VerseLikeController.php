@@ -47,18 +47,22 @@ class VerseLikeController extends Controller
         return response()->json($likes);
     }
     public function likedVerses(Request $request)
-{
-    $user = $request->user();
+    {
+        $user = $request->user();
+        
+        if (!$user) {
+            return response()->json(['error' => 'Utilisateur non authentifié'], 401);
+        }
 
-    $likedVerses = DB::table('verse_likes')
-        ->join('bible_verses_segond_1910', 'verse_likes.verse_id', '=', 'bible_verses_segond_1910.id')
-        ->where('verse_likes.user_id', $user->id)
-        ->select('bible_verses_segond_1910.*')
-        ->orderBy('created_at', 'desc')
-        ->get();
+        $likedVerses = DB::table('verse_likes')
+            ->join('bible_verses_segond_1910', 'verse_likes.verse_id', '=', 'bible_verses_segond_1910.id')
+            ->where('verse_likes.user_id', $user->id)
+            ->select('bible_verses_segond_1910.*')
+            ->orderBy('verse_likes.created_at', 'desc')
+            ->get();
 
-    return response()->json($likedVerses);
-}
+        return response()->json($likedVerses);
+    }
 
     
 }
