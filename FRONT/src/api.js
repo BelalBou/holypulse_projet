@@ -1,9 +1,11 @@
 import axios from 'axios'
-import Cookies from 'js-cookie' // ← Assure-toi d’avoir fait : npm install js-cookie
+import Cookies from 'js-cookie' // ← Assure-toi d'avoir fait : npm install js-cookie
 
+// Utilise la variable d'environnement ou localhost en développement
+const baseURL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000'
 
 const api = axios.create({
-  baseURL: 'http://localhost:8000/api', // pour /api/... (ex: verses, likes, etc.)
+  baseURL: `${baseURL}/api`, // pour /api/... (ex: verses, likes, etc.)
   timeout: 5000,
   withCredentials: true,
 })
