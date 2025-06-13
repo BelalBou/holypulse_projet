@@ -34,19 +34,8 @@ COPY BACK/ ./
 # Installer les dépendances avec --no-scripts pour éviter les erreurs
 RUN composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist --no-scripts
 
-# Copier la configuration de production (maintenant que les fichiers existent)
-COPY BACK/.env.production .env
-
 # Configuration Apache pour Laravel
-RUN echo '<VirtualHost *:80> \
-    DocumentRoot /var/www/html/public \
-    <Directory /var/www/html/public> \
-        AllowOverride All \
-        Require all granted \
-    </Directory> \
-    ErrorLog ${APACHE_LOG_DIR}/error.log \
-    CustomLog ${APACHE_LOG_DIR}/access.log combined \
-</VirtualHost>' > /etc/apache2/sites-available/000-default.conf
+COPY BACK/apache-vhost.conf /etc/apache2/sites-available/000-default.conf
 
 # Permissions Laravel
 RUN chown -R www-data:www-data /var/www/html \
