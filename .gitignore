@@ -17,3 +17,17 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
+
+# Build outputs
+dist/
+build/
+
+# Docker
+docker-compose.override.yml
+
+# Frontend
+/FRONT/node_modules/
+/FRONT/dist/
+
+# Logs
+*.log
