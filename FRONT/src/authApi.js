@@ -6,7 +6,7 @@ const baseURL = 'https://holypulse-projet.onrender.com'
 
 const api = axios.create({
   baseURL: baseURL,
-  timeout: 5000,
+  timeout: 30000, // Augmenté à 30 secondes pour les cold starts de Render
   headers: {
     'Content-Type': 'application/json',
     'Accept': 'application/json',
