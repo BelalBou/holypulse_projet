@@ -3,8 +3,9 @@ set -e
 
 echo "🚀 Démarrage de l'application Laravel..."
 
-# Attendre un peu pour que la base de données soit prête
-sleep 10
+# Attendre que la base de données PostgreSQL soit prête
+echo "⏳ Attente de la base de données PostgreSQL..."
+sleep 15
 
 # Générer la clé d'application si elle n'existe pas
 if [ -z "$APP_KEY" ] || [ "$APP_KEY" = "base64:YOUR_GENERATED_KEY_HERE" ]; then

@@ -1,0 +1,58 @@
+services:
+  # Backend Laravel API
+  - type: web
+    name: holypulse-api
+    env: docker
+    dockerfilePath: ./Dockerfile.render.backend
+    dockerContext: ./BACK
+    plan: starter
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: false
+      - key: DB_CONNECTION
+        value: pgsql
+      - key: DB_HOST
+        fromDatabase:
+          name: holypulse-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: holypulse-db
+          property: port
+      - key: DB_DATABASE
+        fromDatabase:
+          name: holypulse-db
+          property: database
+      - key: DB_USERNAME
+        fromDatabase:
+          name: holypulse-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: holypulse-db
+          property: password
+      - key: DATABASE_URL
+        fromDatabase:
+          name: holypulse-db
+          property: connectionString
+
+  # Frontend Vue.js
+  - type: static
+    name: holypulse-frontend
+    buildCommand: cd FRONT && npm install && npm run build
+    staticPublishPath: ./FRONT/dist
+    envVars:
+      - key: VITE_API_BASE_URL
+        fromService:
+          type: web
+          name: holypulse-api
+          property: host
+
+# Base de données PostgreSQL
+databases:
+  - name: holypulse-db
+    databaseName: holypulse_production
+    user: holypulse_user
+    plan: starter

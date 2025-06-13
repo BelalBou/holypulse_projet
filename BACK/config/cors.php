@@ -22,7 +22,7 @@ return [
     'allowed_origins' => [
         'http://localhost:5173',
         'http://localhost:3000',
-        'https://your-app-name.onrender.com', // Remplacez par votre URL Render
+        'https://holypulse-projet.onrender.com',
         env('FRONTEND_URL', 'http://localhost:3000'),
     ],
 

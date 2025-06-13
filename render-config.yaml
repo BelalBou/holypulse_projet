@@ -1,0 +1,38 @@
+services:
+  - type: web
+    name: holypulse-backend
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile.render
+    dockerContext: ./BACK
+    envVars:
+      - key: APP_NAME
+        value: HolyPulse
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: false
+      - key: APP_URL
+        value: https://holypulse-projet.onrender.com
+      - key: APP_KEY
+        value: base64:QmF0dGVyeUJlYXV0aWZ1bEVuZXJneTIwMjUhSG9seVB1bHNl
+      - key: DATABASE_URL
+        value: postgresql://holy_user:0j3VsaVte2QSzolSgEfxdQnMN1Q2KFxu@dpg-d15p3h2dbo4c73c2gsf0-a.frankfurt-postgres.render.com/holy
+      - key: DB_CONNECTION
+        value: pgsql
+      - key: DB_HOST
+        value: dpg-d15p3h2dbo4c73c2gsf0-a.frankfurt-postgres.render.com
+      - key: DB_PORT
+        value: 5432
+      - key: DB_DATABASE
+        value: holy
+      - key: DB_USERNAME
+        value: holy_user
+      - key: DB_PASSWORD
+        value: 0j3VsaVte2QSzolSgEfxdQnMN1Q2KFxu
+      - key: FRONTEND_URL
+        value: https://holypulse-projet.onrender.com
+      - key: SANCTUM_STATEFUL_DOMAINS
+        value: holypulse-projet.onrender.com
+      - key: SESSION_DOMAIN
+        value: .holypulse-projet.onrender.com
