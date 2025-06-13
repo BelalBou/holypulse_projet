@@ -19,7 +19,7 @@
 <style scoped src="../assets/css/register.css"></style>
 
 <script>
-import axios from 'axios'
+import authApi from '../authApi'
 
 export default {
   name: 'Register',
@@ -34,7 +34,7 @@ export default {
   methods: {
     async handleRegister() {
       try {
-        const response = await axios.post('/api/register', {
+        const response = await authApi.post('/api/register', {
           name: this.name,
           email: this.email,
           password: this.password,
