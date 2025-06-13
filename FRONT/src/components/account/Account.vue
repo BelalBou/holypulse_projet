@@ -44,7 +44,7 @@
   
   async function logout() {
     try {
-      await authApi.post('/logout')
+      await authApi.post('/api/logout')
       router.push('/')
     } catch (error) {
       console.error('Erreur de déconnexion', error)

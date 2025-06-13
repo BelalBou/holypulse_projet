@@ -141,7 +141,7 @@
   if (!verse || !commentText.value.trim()) return
 
   try {
-    await authApi.post(`api/verses/${verse.id}/comments`, {
+    await authApi.post(`/api/verses/${verse.id}/comments`, {
       content: commentText.value.trim()
     })
     commentText.value = ''

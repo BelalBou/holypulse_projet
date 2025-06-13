@@ -1,9 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthController;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,23 +21,6 @@ Route::get('/', function () {
         'version' => '1.0.0'
     ]);
 });
-
-// Route::post('/login', [AuthController::class, 'login']); // Déplacé vers api.php
-
-
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
-Route::post('/logout', function (Request $request) {
-    Auth::guard('web')->logout(); // Ajout du guard explicite
-
-    // Supprime le token de session s’il existe
-    $request->session()->invalidate();
-    $request->session()->regenerateToken();
-
-    return response()->json(['message' => 'Déconnecté avec succès']);
-})->middleware('auth:sanctum');
 
 // Route de test de santé
 Route::get('/health', function () {
